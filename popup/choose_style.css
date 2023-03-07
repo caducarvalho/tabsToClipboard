@@ -1,0 +1,135 @@
+:root {
+  --light-color-text: #333;
+  --light-color-back: #F6F6F6;
+  --light-color-border: rgba(0,0,0,0.1);
+  --light-color-list: rgba(0,0,0,0.05);
+  --dark-color-text: #EEE;
+  --dark-color-back: #222;
+  --dark-color-border: rgba(255,255,255,0.1);
+  --dark-color-list: rgba(255,255,255,0.05);
+  --button-action-idle: #09F;
+  --button-action-hover: #08D;
+  --button-action-active: #2AF;
+  --button-label: #FFF;
+}
+
+html,
+body {
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--light-color-back);
+  color: var(--light-color-text);
+  font-size: 12px;
+  line-height: 1.2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+form {
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0 0 2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: inherit;
+  opacity: 0.5;
+  border-bottom: 1px solid var(--light-color-border);
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+input {
+  flex: 0 0 auto;
+}
+
+span {
+  flex: 0 1 100%;
+  display: block;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+ul {
+  margin: 4px 0 0;
+  background-color: var(--light-color-list);
+  border: 1px solid var(--light-color-border);
+  border-radius: 4px;
+  padding: 4px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+button {
+  display: block;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--button-action-idle);
+  color: var(--button-label);
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--button-action-hover);
+}
+
+button:active {
+  background-color: var(--button-action-active);
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    background-color: var(--dark-color-back);
+    color: var(--dark-color-text);
+  }
+
+  legend {
+    border-color: var(--dark-color-border);
+  }
+
+  ul {
+    border-color: var(--dark-color-border);
+    background-color: var(--dark-color-list);
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./choose_style.css" />
+  </head>
+
+  <body>
+    <form id="clipboard-form">
+      <fieldset id="item-selector-box">
+        <legend>Tabs to copy:</legend>
+
+        <label for="option-all-tabs">
+          <input class="all-tabs-option" id="option-all-tabs" type="checkbox" name="itemCollectionType" value="all-tabs" checked />
+          <span>Copy all tabs' URL's</span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Separate URL's with:</legend>
+
+        <label for="option-double-line">
+          <input class="item-option" id="option-double-line" type="radio" name="joinType" value="double-line" checked />
+          <span>Double lines</span>
+        </label>
+        <label for="option-simple-line">
+          <input class="item-option" id="option-simple-line" type="radio" name="joinType" value="simple-line" />
+          <span>Simple lines</span>
+        </label>
+        <label for="option-comma">
+          <input class="item-option" id="option-comma" type="radio" name="joinType" value="comma" />
+          <span>Commas</span>
+        </label>
+        <label for="option-spaced-comma">
+          <input class="item-option"  id="option-spaced-comma" type="radio" name="joinType" value="spaced-comma" />
+          <span>Spaced commas</span>
+        </label>
+        <label for="option-space">
+          <input class="item-option" id="option-space" type="radio" name="joinType" value="space" />
+          <span>Spaces</span>
+        </label>
+        <label for="option-array">
+          <input class="item-option" id="option-array" type="radio" name="joinType" value="array" />
+          <span>Stringified array</span>
+        </label>
+        <label for="option-php-array">
+          <input class="item-option" id="option-php-array" type="radio" name="joinType" value="php-array" />
+          <span>Stringified PHP array</span>
+        </label>
+        <label for="option-html-ul">
+          <input class="item-option" id="option-html-ul" type="radio" name="joinType" value="html-ul" />
+          <span>HTML &lt;ul&gt;/&lt;li&gt; elements</span>
+        </label>
+        <label for="option-html-ol">
+          <input class="item-option" id="option-html-ol" type="radio" name="joinType" value="html-ol" />
+          <span>HTML &lt;ol&gt;/&lt;li&gt; elements</span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wrap URL's in quotes:</legend>
+
+        <label for="option-single-quotes">
+          <input class="quote-option" id="option-single-quotes" type="radio" name="quotesType" value="single-quotes" />
+          <span>With single quotes</span>
+        </label>
+        <label for="option-double-quotes">
+          <input class="quote-option" id="option-double-quotes" type="radio" name="quotesType" value="double-quotes" />
+          <span>With double quotes</span>
+        </label>
+        <label for="option-smart-quotes">
+          <input class="quote-option" id="option-smart-quotes" type="radio" name="quotesType" value="smart-quotes" />
+          <span>With smart quotes</span>
+        </label>
+        <label for="option-backtick-quotes">
+          <input class="quote-option" id="option-backtick-quotes" type="radio" name="quotesType" value="backtick-quotes" />
+          <span>Template literals</span>
+        </label>
+        <label for="option-no-quotes">
+          <input class="quote-option" id="option-no-quotes" type="radio" name="quotesType" value="no-quotes" checked />
+          <span>Without quotes</span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Other options:</legend>
+
+        <label for="option-include-title">
+          <input class="title-option" id="option-include-title" type="checkbox" name="includeTitle" value="include-title" />
+          <span>Copy title with URL in parenthesis</span>
+        </label>
+      </fieldset>
+
+      <button type="submit">Copy to clipboard</button>
+    </form>
+    <script src="./choose_style.js"></script>
+  </body>
+</html>
