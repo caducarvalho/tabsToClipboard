@@ -19,14 +19,10 @@ class ClipboardCopierController {
   }
 
   init() {
-    console.log('started');
-
     this.events();
   }
 
   events() {
-    console.log('events');
-
     this.clipboardForm.addEventListener('submit', this.copyTabs);
     this.allTabsOption.addEventListener('change', this.buildItemsList);
     this.includeTitleOption.addEventListener('change', ({ target }) => this.includeTitle = target.checked);
