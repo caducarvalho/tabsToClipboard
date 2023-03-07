@@ -1,5 +1,8 @@
+var browser = browser || chrome;
+
 class ClipboardCopierController {
   constructor(id) {
+    this.submitButton = document.getElementById(id.submitButton);
     this.clipboardForm = document.getElementById(id.clipboardForm);
     this.allTabsOption = document.getElementById(id.allTabsOption);
     this.itemSelectorBox = document.getElementById(id.itemSelectorBox);
@@ -13,6 +16,7 @@ class ClipboardCopierController {
     this.onError = this.onError.bind(this);
     this.copyTabs = this.copyTabs.bind(this);
     this.buildString = this.buildString.bind(this);
+    this.closeWindow = this.closeWindow.bind(this);
     this.registerTabs = this.registerTabs.bind(this);
     this.getTabsQuery = this.getTabsQuery.bind(this);
     this.buildItemsList = this.buildItemsList.bind(this);
@@ -41,7 +45,7 @@ class ClipboardCopierController {
         this.itemSelectorBox.append(this.itemSelectorList);
       }
 
-      browser.tabs.query({}).then((tabs) => {
+      chrome.tabs.query({}).then((tabs) => {
         for (const tab of tabs) {
           const newTabItem = document.createElement('li');
           const newTabItemLabel = document.createElement('label');
@@ -115,7 +119,6 @@ class ClipboardCopierController {
       activeTabs.push(this.getSeparator(this.includeTitleOption.checked === true ? `${tab.title} (${tab.url})` : tab.url, separator.id));
     }
 
-    console.log(this.buildString(activeTabs, option.id));
     if (navigator.clipboard) navigator.clipboard.writeText(this.buildString(activeTabs, option.id));
   }
 
@@ -125,7 +128,7 @@ class ClipboardCopierController {
       const selectedTabs = [];
 
       for (const input of selectedInputs) selectedTabs.push({ url: input.getAttribute('data-url'), title: input.getAttribute('data-title')});
-      console.log(selectedTabs);
+
       return selectedTabs;
     }
   }
@@ -133,12 +136,20 @@ class ClipboardCopierController {
   copyTabs(e) {
     e.preventDefault();
 
-    if (this.allTabs)
+    if (this.allTabs) {
       browser.tabs.query({}).then(this.registerTabs, this.onError);
-    else
+    } else {
       this.registerTabs(this.getTabsQuery());
+    }
 
-    window.close();
+    this.closeWindow();
+  }
+  
+  closeWindow() {
+    this.submitButton.disabled = true;
+    this.submitButton.innerText = 'Copied to clipboard!'
+
+    setTimeout(window.close, 500);
   }
 
   onError(error) {
@@ -152,27 +163,8 @@ const clipboardCopier = new ClipboardCopierController({
   allTabsOption: 'option-all-tabs',
   itemSelectorBox: 'item-selector-box',
   itemSelectorList: 'item-selector-list',
-  includeTitleOption: 'option-include-title'
+  includeTitleOption: 'option-include-title',
+  submitButton: 'submit-button'
 });
 
 clipboardCopier.init();
-
-/*
-
-Debugging - Runtime / this-firefox (about:debugging#/runtime/this-firefox)
-
-16,456 clipboard icons - Iconfinder (https://www.iconfinder.com/search?q=clipboard)
-
-firefox extension browser_action at DuckDuckGo (https://duckduckgo.com/?q=firefox+extension+browser_action&t=ffab&ia=web)
-
-firefox extension icon dark mode not working - Pesquisa Google (https://www.google.com/search?q=firefox+extension+icon+dark+mode+not+working&sxsrf=AJOqlzUA9fKeB_xzSQf6ItgKvnoseXn7Qw%3A1678162486347&ei=NroGZNPeFJGjptQPr8SJ8AM&oq=firefox+extension+icon+dark+mode+nopt&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAxgAMgcIIRCgARAKMgcIIRCgARAKMgcIIRCgARAKOgoIABBHENYEELADOgUIIRCgAToICCEQFhAeEB06BAghEBVKBAhBGABQlgRYtw1g-xNoAnABeACAAb4BiAGcBpIBAzAuNpgBAKABAcgBCMABAQ&sclient=gws-wiz-serp)
-
-How to correctly design/color icon to be visible across themes? - Add-ons / Development - Mozilla Discourse (https://discourse.mozilla.org/t/how-to-correctly-design-color-icon-to-be-visible-across-themes/27713/5)
-
-action - Mozilla | MDN (https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/action)
-
-action - Mozilla | MDN (https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/action#choosing_icon_sizes)
-
-browser/content/extension.css (chrome://browser/content/extension.css)
-
-*/

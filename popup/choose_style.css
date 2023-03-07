@@ -117,6 +117,11 @@ button:active {
   background-color: var(--button-action-active);
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 @media (prefers-color-scheme: dark) {
   html,
   body {
