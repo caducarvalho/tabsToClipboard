@@ -33,5 +33,11 @@
       "dark": "icons/icon-32-light.svg",
       "size": 32
     }]
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "8cc3896e-60ce-4b62-8197-01aab7291ad0"
+    }
   }
 }
