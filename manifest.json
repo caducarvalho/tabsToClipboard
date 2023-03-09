@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tabs to Clipboard",
-  "version": "1.0.2",
+  "version": "1.0.3",
 
   "description": "Adds a browser action icon that joins every active tab URL into a single string and copy to clipboard.",
   "homepage_url": "https://github.com/caducarvalho/tabsToClipboard",
@@ -13,7 +13,6 @@
   },
 
   "permissions": [
-    "activeTab",
     "tabs",
     "clipboardWrite"
   ],
