@@ -8,7 +8,9 @@
   <body>
     <form id="clipboard-form">
       <fieldset id="item-selector-box">
-        <legend>Tabs to copy:</legend>
+        <div class="options-toggler">
+          <legend>Tabs to copy:</legend>
+        </div>
 
         <label for="option-all-tabs">
           <input class="all-tabs-option" id="option-all-tabs" type="checkbox" name="itemCollectionType" value="all-tabs" checked />
@@ -17,82 +19,183 @@
       </fieldset>
 
       <fieldset>
-        <legend>Separate URL's with:</legend>
+        <div class="options-toggler">
+          <legend>Separate URL's with:</legend>
+          <button type="button" data-refers-to="separation-options-box" class="options-toggler-button closed" id="separation-options-box-toggler">
+            <svg width="12" height="8" viewBox="0 0 12 8">
+              <path d="M 1,2 l 5,5 l 5,-5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="idle" />
+              <path d="M 1,6 l 5,-5 l 5,5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="active" />
+            </svg>
+          </button>
+        </div>
 
-        <label for="option-double-line">
-          <input class="item-option" id="option-double-line" type="radio" name="joinType" value="double-line" checked />
-          <span>Double lines</span>
-        </label>
-        <label for="option-simple-line">
-          <input class="item-option" id="option-simple-line" type="radio" name="joinType" value="simple-line" />
-          <span>Simple lines</span>
-        </label>
-        <label for="option-comma">
-          <input class="item-option" id="option-comma" type="radio" name="joinType" value="comma" />
-          <span>Commas</span>
-        </label>
-        <label for="option-spaced-comma">
-          <input class="item-option"  id="option-spaced-comma" type="radio" name="joinType" value="spaced-comma" />
-          <span>Spaced commas</span>
-        </label>
-        <label for="option-space">
-          <input class="item-option" id="option-space" type="radio" name="joinType" value="space" />
-          <span>Spaces</span>
-        </label>
-        <label for="option-array">
-          <input class="item-option" id="option-array" type="radio" name="joinType" value="array" />
-          <span>Stringified array</span>
-        </label>
-        <label for="option-php-array">
-          <input class="item-option" id="option-php-array" type="radio" name="joinType" value="php-array" />
-          <span>Stringified PHP array</span>
-        </label>
-        <label for="option-html-ul">
-          <input class="item-option" id="option-html-ul" type="radio" name="joinType" value="html-ul" />
-          <span>HTML &lt;ul&gt;/&lt;li&gt; elements</span>
-        </label>
-        <label for="option-html-ol">
-          <input class="item-option" id="option-html-ol" type="radio" name="joinType" value="html-ol" />
-          <span>HTML &lt;ol&gt;/&lt;li&gt; elements</span>
-        </label>
+        <div class="options-list closed" id="separation-options-box">
+          <label for="option-double-line">
+            <input class="item-option" id="option-double-line" type="radio" name="joinType" value="double-line" checked />
+            <span>Double lines</span>
+          </label>
+          <label for="option-simple-line">
+            <input class="item-option" id="option-simple-line" type="radio" name="joinType" value="simple-line" />
+            <span>Simple lines</span>
+          </label>
+          <label for="option-comma">
+            <input class="item-option" id="option-comma" type="radio" name="joinType" value="comma" />
+            <span>Commas</span>
+          </label>
+          <label for="option-spaced-comma">
+            <input class="item-option"  id="option-spaced-comma" type="radio" name="joinType" value="spaced-comma" />
+            <span>Spaced commas</span>
+          </label>
+          <label for="option-space">
+            <input class="item-option" id="option-space" type="radio" name="joinType" value="space" />
+            <span>Spaces</span>
+          </label>
+          <label for="option-array">
+            <input class="item-option" id="option-array" type="radio" name="joinType" value="array" />
+            <span>Stringified array</span>
+          </label>
+          <label for="option-php-array">
+            <input class="item-option" id="option-php-array" type="radio" name="joinType" value="php-array" />
+            <span>Stringified PHP array</span>
+          </label>
+          <label for="option-html-ul">
+            <input class="item-option" id="option-html-ul" type="radio" name="joinType" value="html-ul" />
+            <span>HTML &lt;ul&gt;/&lt;li&gt; elements</span>
+          </label>
+          <label for="option-html-ol">
+            <input class="item-option" id="option-html-ol" type="radio" name="joinType" value="html-ol" />
+            <span>HTML &lt;ol&gt;/&lt;li&gt; elements</span>
+          </label>
+          <label for="option-markdown-ul">
+            <input class="item-option" id="option-markdown-ul" type="radio" name="joinType" value="markdown-ul" />
+            <span>Markdown bullet list</span>
+          </label>
+          <label for="option-markdown-ol">
+            <input class="item-option" id="option-markdown-ol" type="radio" name="joinType" value="markdown-ol" />
+            <span>Markdown ordered list</span>
+          </label>
+        </div>
       </fieldset>
 
       <fieldset>
-        <legend>Wrap URL's in quotes:</legend>
+        <div class="options-toggler">
+          <legend>Wrap URL's in quotes:</legend>
+          <button type="button" data-refers-to="quotes-options-box" class="options-toggler-button closed" id="quotes-options-box-toggler">
+            <svg width="12" height="8" viewBox="0 0 12 8">
+              <path d="M 1,2 l 5,5 l 5,-5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="idle" />
+              <path d="M 1,6 l 5,-5 l 5,5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="active" />
+            </svg>
+          </button>
+        </div>
 
-        <label for="option-single-quotes">
-          <input class="quote-option" id="option-single-quotes" type="radio" name="quotesType" value="single-quotes" />
-          <span>With single quotes</span>
-        </label>
-        <label for="option-double-quotes">
-          <input class="quote-option" id="option-double-quotes" type="radio" name="quotesType" value="double-quotes" />
-          <span>With double quotes</span>
-        </label>
-        <label for="option-smart-quotes">
-          <input class="quote-option" id="option-smart-quotes" type="radio" name="quotesType" value="smart-quotes" />
-          <span>With smart quotes</span>
-        </label>
-        <label for="option-backtick-quotes">
-          <input class="quote-option" id="option-backtick-quotes" type="radio" name="quotesType" value="backtick-quotes" />
-          <span>Template literals</span>
-        </label>
-        <label for="option-no-quotes">
-          <input class="quote-option" id="option-no-quotes" type="radio" name="quotesType" value="no-quotes" checked />
-          <span>Without quotes</span>
-        </label>
+        <div class="options-list closed" id="quotes-options-box">
+
+          <label for="option-no-quotes">
+            <input class="quote-option" id="option-no-quotes" type="radio" name="quotesType" value="no-quotes" checked />
+            <span>Without quotes</span>
+          </label>
+          <label for="option-single-quotes">
+            <input class="quote-option" id="option-single-quotes" type="radio" name="quotesType" value="single-quotes" />
+            <span>Single straight quotes <code>'…'</code></span>
+          </label>
+          <label for="option-double-quotes">
+            <input class="quote-option" id="option-double-quotes" type="radio" name="quotesType" value="double-quotes" />
+            <span>Double straight quotes <code>"…"</code></span>
+          </label>
+          <label for="option-backtick-quotes">
+            <input class="quote-option" id="option-backtick-quotes" type="radio" name="quotesType" value="backtick-quotes" />
+            <span>Template literals <code>`…`</code></span>
+          </label>
+          <label for="option-single-curly-quotes">
+            <input class="quote-option" id="option-single-curly-quotes" type="radio" name="quotesType" value="single-curly-quotes" />
+            <span>Single curly quotes (UK) <code>‘…’</code></span>
+          </label>
+          <label for="option-double-curly-quotes">
+            <input class="quote-option" id="option-double-curly-quotes" type="radio" name="quotesType" value="double-curly-quotes" />
+            <span>Double curly quotes (US, Brazil) <code>“…”</code></span>
+          </label>
+          <label for="option-german-quotes">
+            <input class="quote-option" id="option-german-quotes" type="radio" name="quotesType" value="german-quotes" />
+            <span>German curly quotes <code>„…“</code></span>
+          </label>
+          <label for="option-polish-quotes">
+            <input class="quote-option" id="option-polish-quotes" type="radio" name="quotesType" value="polish-quotes" />
+            <span>Polish curly quotes <code>„…”</code></span>
+          </label>
+          <label for="option-scandinavian-quotes">
+            <input class="quote-option" id="option-scandinavian-quotes" type="radio" name="quotesType" value="scandinavian-quotes" />
+            <span>Scandinavian curly quotes <code>”…”</code></span>
+          </label>
+          <label for="option-single-guillemets">
+            <input class="quote-option" id="option-single-guillemets" type="radio" name="quotesType" value="single-guillemets" />
+            <span>Single guillemets <code>‹…›</code></span>
+          </label>
+          <label for="option-double-guillemets">
+            <input class="quote-option" id="option-double-guillemets" type="radio" name="quotesType" value="double-guillemets" />
+            <span>Double guillemets <code>«…»</code></span>
+          </label>
+          <label for="option-french-guillemets">
+            <input class="quote-option" id="option-french-guillemets" type="radio" name="quotesType" value="french-guillemets" />
+            <span>French guillemets <code>« … »</code></span>
+          </label>
+          <label for="option-danish-guillemets">
+            <input class="quote-option" id="option-danish-guillemets" type="radio" name="quotesType" value="danish-guillemets" />
+            <span>Danish guillemets <code>»…«</code></span>
+          </label>
+          <label for="option-scandinavian-guillemets">
+            <input class="quote-option" id="option-scandinavian-guillemets" type="radio" name="quotesType" value="scandinavian-guillemets" />
+            <span>Scandinavian guillemets <code>»…»</code></span>
+          </label>
+          <label for="option-china-japan-quotes">
+            <input class="quote-option" id="option-china-japan-quotes" type="radio" name="quotesType" value="china-japan-quotes" />
+            <span>Eastern quotes (China, Japan) <code>「…」</code></span>
+          </label>
+          <label for="option-korean-quotes">
+            <input class="quote-option" id="option-korean-quotes" type="radio" name="quotesType" value="korean-quotes" />
+            <span>Korean quotes <code>《…》</code></span>
+          </label>
+        </div>
       </fieldset>
 
       <fieldset>
-        <legend>Other options:</legend>
+        <div class="options-toggler">
+          <legend>Item style:</legend>
+          <button type="button" data-refers-to="style-options-box" class="options-toggler-button closed" id="style-options-box-toggler">
+            <svg width="12" height="8" viewBox="0 0 12 8">
+              <path d="M 1,2 l 5,5 l 5,-5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="idle" />
+              <path d="M 1,6 l 5,-5 l 5,5" stroke="magenta" stroke-width="1" stroke-linecap="round" fill="none" class="active" />
+            </svg>
+          </button>
+        </div>
 
-        <label for="option-include-title">
-          <input class="title-option" id="option-include-title" type="checkbox" name="includeTitle" value="include-title" />
-          <span>Copy title with URL in parenthesis</span>
-        </label>
+        <div class="options-list closed" id="style-options-box">
+          <label for="option-url-only">
+            <input class="style-option" id="option-url-only" type="radio" name="includeTitle" value="url-only" checked />
+            <span>URL only</span>
+          </label>
+          <label for="option-title-url">
+            <input class="style-option" id="option-title-url" type="radio" name="includeTitle" value="title-url" />
+            <span>Tab title (URL in parenthesis)</span>
+          </label>
+          <label for="option-csv-item">
+            <input class="style-option" id="option-csv-item" type="radio" name="includeTitle" value="csv-item" />
+            <span>CSV (Title,URL)</span>
+          </label>
+          <label for="option-html-anchor">
+            <input class="style-option" id="option-html-anchor" type="radio" name="includeTitle" value="html-anchor" />
+            <span>HTML anchor tag (URL in href)</span>
+          </label>
+          <label for="option-markdown-link">
+            <input class="style-option" id="option-markdown-link" type="radio" name="includeTitle" value="markdown-link" />
+            <span>Markdown link [Title](URL)</span>
+          </label>
+        </div>
       </fieldset>
 
-      <button id="submit-button" type="submit">Copy to clipboard</button>
+      <button id="submit-button" class="submit-button" type="submit">Copy to clipboard</button>
     </form>
+
     <script src="./choose_style.js"></script>
   </body>
 </html>
+

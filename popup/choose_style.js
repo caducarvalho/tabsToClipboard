@@ -7,12 +7,16 @@ class ClipboardCopierController {
     this.allTabsOption = document.getElementById(id.allTabsOption);
     this.itemSelectorBox = document.getElementById(id.itemSelectorBox);
     this.itemSelectorList = document.getElementById(id.itemSelectorList);
-    this.includeTitleOption = document.getElementById(id.includeTitleOption);
+    this.separationTogglerButton = document.getElementById(id.separationTogglerButton);
+    this.quotesTogglerButton = document.getElementById(id.quotesTogglerButton);
+    this.styleTogglerButton = document.getElementById(id.styleTogglerButton);
     this.allTabs = this.allTabsOption.checked;
-    this.includeTitle = this.includeTitleOption.checked;
+
+    this.currentTabs = browser.tabs.query({ currentWindow: true });
 
     this.init = this.init.bind(this);
     this.events = this.events.bind(this);
+    this.toggler = this.toggler.bind(this);
     this.onError = this.onError.bind(this);
     this.copyTabs = this.copyTabs.bind(this);
     this.buildString = this.buildString.bind(this);
@@ -20,6 +24,7 @@ class ClipboardCopierController {
     this.registerTabs = this.registerTabs.bind(this);
     this.getTabsQuery = this.getTabsQuery.bind(this);
     this.buildItemsList = this.buildItemsList.bind(this);
+    this.checkPreviousOptions = this.checkPreviousOptions.bind(this);
   }
 
   init() {
@@ -27,9 +32,27 @@ class ClipboardCopierController {
   }
 
   events() {
+    this.checkPreviousOptions();
+
     this.clipboardForm.addEventListener('submit', this.copyTabs);
     this.allTabsOption.addEventListener('change', this.buildItemsList);
-    this.includeTitleOption.addEventListener('change', ({ target }) => this.includeTitle = target.checked);
+    this.separationTogglerButton.addEventListener('mousedown', this.toggler);
+    this.quotesTogglerButton.addEventListener('mousedown', this.toggler);
+    this.styleTogglerButton.addEventListener('mousedown', this.toggler);
+  }
+
+  checkPreviousOptions() {
+    if (localStorage.getItem('separationOption')) document.getElementById(localStorage.getItem('separationOption')).checked = true;
+    if (localStorage.getItem('quotesOption')) document.getElementById(localStorage.getItem('quotesOption')).checked = true;
+    if (localStorage.getItem('styleOption')) document.getElementById(localStorage.getItem('styleOption')).checked = true;
+  }
+
+  toggler(e) {
+    const boxToCollapse = document.getElementById(e.target.dataset.refersTo);
+
+    boxToCollapse.classList.toggle('closed');
+    e.target.classList.toggle('closed');
+    e.target.classList.toggle('open');
   }
 
   buildItemsList(e) {
@@ -45,7 +68,7 @@ class ClipboardCopierController {
         this.itemSelectorBox.append(this.itemSelectorList);
       }
 
-      chrome.tabs.query({}).then((tabs) => {
+      this.currentTabs.then((tabs) => {
         for (const tab of tabs) {
           const newTabItem = document.createElement('li');
           const newTabItemLabel = document.createElement('label');
@@ -70,18 +93,55 @@ class ClipboardCopierController {
     }
   }
 
-  getSeparator(item, type) {
+  wrapInQuotes(item, type) {
     switch (type) {
-      case 'option-simple-quotes':
+      case 'option-single-quotes':
         return `'${item}'`;
       case 'option-double-quotes':
         return `"${item}"`;
-      case 'option-smart-quotes':
-        return `“${item}”`;
       case 'option-backtick-quotes':
         return `\`${item}\``;
+      case 'option-single-curly-quotes':
+        return `‘${item}’`;
+      case 'option-double-curly-quotes':
+        return `“${item}”`;
+      case 'option-german-quotes':
+        return `„${item}“`;
+      case 'option-polish-quotes':
+        return `„${item}”`;
+      case 'option-scandinavian-quotes':
+        return `”${item}”`;
+      case 'option-single-guillemets':
+        return `‹${item}›`;
+      case 'option-double-guillemets':
+        return `«${item}»`;
+      case 'option-french-guillemets':
+        return `« ${item} »`;
+      case 'option-danish-guillemets':
+        return `»${item}«`;
+      case 'option-scandinavian-guillemets':
+        return `»${item}»`;
+      case 'option-china-japan-quotes':
+        return `「${item}」”`;
+      case 'option-korean-quotes':
+        return `《${item}》”`;
       default:
         return item;
+    }
+  }
+
+  composeItem(url, title, type) {
+    switch (type) {
+      case 'option-title-url':
+        return `${title} (${url})`;
+      case 'option-csv-item':
+        return `"${title}","${url}"`;
+      case 'option-html-anchor':
+        return `<a href="${url}">${title}</a>`;
+      case 'option-markdown-link':
+        return `[${title}](${url})`;
+      default:
+        return url;
     }
   }
 
@@ -105,21 +165,34 @@ class ClipboardCopierController {
         return `<ul>\n\ \ <li>${arr.join(`</li>\n\ \ <li>`)}</li>\n</ul>`;
       case 'option-html-ol':
         return `<ol>\n\ \ <li>${arr.join(`</li>\n\ \ <li>`)}</li>\n</ol>`;
+      case 'option-markdown-ul':
+        return `\-\ ${arr.join(`\n\-\ `)}`;
+      case 'option-markdown-ol':
+        let string = '';
+
+        for (let i = 0; i < arr.length; i++) string += `${i + 1}. ${arr[i]}\n`;
+
+        return string;
       default:
         return false;
     }
   }
 
   registerTabs(tabs) {
-    const option = document.querySelector('.item-option:checked');
-    const separator = document.querySelector('.quote-option:checked');
+    const separation = document.querySelector('.item-option:checked');
+    const quotes = document.querySelector('.quote-option:checked');
+    const style = document.querySelector('.style-option:checked');
     const activeTabs = [];
 
     for (const tab of tabs) {
-      activeTabs.push(this.getSeparator(this.includeTitleOption.checked === true ? `${tab.title} (${tab.url})` : tab.url, separator.id));
+      activeTabs.push(this.wrapInQuotes(this.composeItem(tab.url, tab.title, style.id), quotes.id));
     }
 
-    if (navigator.clipboard) navigator.clipboard.writeText(this.buildString(activeTabs, option.id));
+    if (navigator.clipboard) navigator.clipboard.writeText(this.buildString(activeTabs, separation.id));
+
+    localStorage.setItem('separationOption', separation.id);
+    localStorage.setItem('quotesOption', quotes.id);
+    localStorage.setItem('styleOption', style.id);
   }
 
   getTabsQuery() {
@@ -137,7 +210,7 @@ class ClipboardCopierController {
     e.preventDefault();
 
     if (this.allTabs) {
-      browser.tabs.query({}).then(this.registerTabs, this.onError);
+      this.currentTabs.then(this.registerTabs, this.onError);
     } else {
       this.registerTabs(this.getTabsQuery());
     }
@@ -164,7 +237,10 @@ const clipboardCopier = new ClipboardCopierController({
   itemSelectorBox: 'item-selector-box',
   itemSelectorList: 'item-selector-list',
   includeTitleOption: 'option-include-title',
-  submitButton: 'submit-button'
+  submitButton: 'submit-button',
+  separationTogglerButton: 'separation-options-box-toggler',
+  quotesTogglerButton: 'quotes-options-box-toggler',
+  styleTogglerButton: 'style-options-box-toggler'
 });
 
 clipboardCopier.init();
