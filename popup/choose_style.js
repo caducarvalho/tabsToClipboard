@@ -42,9 +42,13 @@ class ClipboardCopierController {
   }
 
   checkPreviousOptions() {
-    if (localStorage.getItem('separationOption')) document.getElementById(localStorage.getItem('separationOption')).checked = true;
-    if (localStorage.getItem('quotesOption')) document.getElementById(localStorage.getItem('quotesOption')).checked = true;
-    if (localStorage.getItem('styleOption')) document.getElementById(localStorage.getItem('styleOption')).checked = true;
+    if (browser.storage && browser.storage.sync) {
+      browser.storage.sync.get(['separationOption', 'quotesOption', 'styleOption']).then((res) => {
+        for (const key in res) {
+          document.getElementById(res[key]).checked = true;
+        }
+      });
+    }
   }
 
   toggler(e) {
@@ -190,9 +194,11 @@ class ClipboardCopierController {
 
     if (navigator.clipboard) navigator.clipboard.writeText(this.buildString(activeTabs, separation.id));
 
-    localStorage.setItem('separationOption', separation.id);
-    localStorage.setItem('quotesOption', quotes.id);
-    localStorage.setItem('styleOption', style.id);
+    if (browser.storage && browser.storage.sync) browser.storage.sync.set({
+      separationOption: separation.id,
+      quotesOption: quotes.id,
+      styleOption: style.id
+    });
   }
 
   getTabsQuery() {
